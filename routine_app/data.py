@@ -65,9 +65,9 @@ class Resources:
     def reset_resource_availability(self):
         '''Resets resource availability'''
 
-        self.Faculty_data['SLOT_AVAILABILITY'] = '0.0.0.0.0'
-        self.Room_data['SLOT_AVAILABILITY'] = '0.0.0.0.0'
-        self.Division_data['SLOT_AVAILABILITY'] = '0.0.0.0.0'
+        self.Faculty_data['SLOT_AVAILABILITY'] = '0.0.0.0.0.0.0'
+        self.Room_data['SLOT_AVAILABILITY'] = '0.0.0.0.0.0.0'
+        self.Division_data['SLOT_AVAILABILITY'] = '0.0.0.0.0.0.0'
 
     def __init__(self, teacher_data_file, room_data_file, division_data_file):
         # files containing resource data
