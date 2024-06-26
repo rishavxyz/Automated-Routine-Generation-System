@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { FormDataContext } from '../context/FormDataContext';
 
 
-
-
 const Form = () => {
   const {
     formData,
@@ -16,22 +14,18 @@ const Form = () => {
     weeklyHoliday,
   } = useContext(FormDataContext);
 
-
   const [form, setForm] = useState({
     classStartTime: "",
     classDuration: "",
     breakDuration: "",
   });
 
-
   const [error, setError] = useState("");
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [slotPref, setSlotPref] = useState({});
 
-
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const storedSlotPref = localStorage.getItem('slot_pref');
@@ -40,14 +34,12 @@ const Form = () => {
     }
   }, [formData, courseFile, slotsPerDay, breakAfter, weeklyHoliday]);
 
-
   const handleFileChange = (event, fileType) => {
     setFormData({
       ...formData,
       [fileType]: event.target.files[0],
     });
   };
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -56,7 +48,6 @@ const Form = () => {
       [name]: value,
     });
   };
-
 
   const validateForm = () => {
     if (
@@ -86,16 +77,13 @@ const Form = () => {
     return true;
   };
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateForm()) {
       return;
     }
 
-
     setLoading(true);
-
 
     const formDataToSend = new FormData();
     formDataToSend.append('facultyFile', formData.facultyFile);
@@ -107,12 +95,10 @@ const Form = () => {
     formDataToSend.append('weeklyHoliday', JSON.stringify(weeklyHoliday));
     formDataToSend.append('slot_pref', JSON.stringify(slotPref));
 
-
     localStorage.setItem("classStartTime", form.classStartTime);
     localStorage.setItem("classDuration", form.classDuration);
     localStorage.setItem("breakSlot", breakAfter);
     localStorage.setItem("breakDuration", form.breakDuration);
-
 
     try {
       const response = await axios.post('http://localhost:8000/generate_routine/', formDataToSend, {
@@ -131,7 +117,6 @@ const Form = () => {
     }
   };
 
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -141,13 +126,11 @@ const Form = () => {
               Routine Generation Form
             </p>
 
-
             {error && (
               <div className="bg-red-400 text-white p-4 mb-4 rounded-lg">
                 {error}
               </div>
             )}
-
 
             <div className="md:flex">
               <div className="text-lg relative flex flex-col mb-2.5 md:text-base xl:text-base">
@@ -165,7 +148,6 @@ const Form = () => {
                 />
               </div>
 
-
               <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
                 <label className="flex text-base mb-0.5 xl:text-lg">
                   Room Details*
@@ -181,7 +163,6 @@ const Form = () => {
                 />
               </div>
             </div>
-
 
             <div className="md:flex">
               <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
@@ -200,7 +181,6 @@ const Form = () => {
               </div>
             </div>
 
-
             <div className="text-sm relative flex flex-col my-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
                 Class Start Time (HH:MM)*
@@ -215,7 +195,6 @@ const Form = () => {
                 className="outline-none border border-gray-300 rounded-md px-2.5 py-1.5"
               />
             </div>
-
 
             <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
@@ -232,7 +211,6 @@ const Form = () => {
               />
             </div>
 
-
             <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
                 Break Duration in Minutes*
@@ -247,7 +225,6 @@ const Form = () => {
                 className="outline-none border border-gray-300 rounded-md px-2.5 py-1.5"
               />
             </div>
-
 
             <div className="text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600">
               {loading ? (
@@ -289,10 +266,4 @@ const Form = () => {
   );
 };
 
-
 export default Form;
-
-
-
-
-

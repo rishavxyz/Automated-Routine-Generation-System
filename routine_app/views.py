@@ -146,11 +146,10 @@ class RoutineGenerationAPIView(APIView):
                 print("Room's preference retained:",fn.room_conflict*100,"%")
 #print("Division's preference retained:",fitness.division_fitness*100,"%")
 
-                schedule.display()
+                #schedule.display()
 #print(schedule.schedule)
                 routines = schedule.save_schedule(routine_path, teacher_data)
                 room_data, faculty_data,  section_data = schedule.getResources()
-
                 room_slot = {}
                 faculty_slot = {}
                 section_slot = {}
@@ -162,10 +161,9 @@ class RoutineGenerationAPIView(APIView):
                 
                 for _, row in section_data.iterrows():
                     section_slot.update({row['RESOURCE_ID']: row.drop('RESOURCE_ID').to_dict()})
-                #room_slot = room_slot.to_dict(orient='records')
-                #print(type(room_slot))
-                #faculty_slot = faculty_slot.to_dict(orient='records')
-                #section_slot = section_slot.to_dict(orient='records')
+                # room_slot = room_slot.to_dict(orient='records')
+                # faculty_slot = faculty_slot.to_dict(orient='records')
+                # section_slot = section_slot.to_dict(orient='records')
                 routines['Faculty Fitness'] = str(fn.faculty_conflict*100) + "%"
                 routines['Room Fitness'] = str(fn.room_conflict*100) + "%"
                 routines["Total Slots"] = slots_per_day
@@ -183,7 +181,7 @@ class RoutineGenerationAPIView(APIView):
         # Display the merged dataframe
             
             all_routines["Teacher Data"] = teacher_data
-            #print(all_routines)
+            print(routines)
             #json_str = json.dumps(all_routines, indent=None, separators=(", ", ": "))
             #print(json_str)
             # print(slots_per_day)
@@ -213,7 +211,6 @@ class RoutineGenerationAPIView(APIView):
 class ScheduleView(APIView):
 
     def post(self, request, *args, **kwargs):
-        key_field = request.data.get('key_field')
         slots_per_day = int(request.data.get('slots_per_day'))
         weekly_holidays = request.data.get('weekly_holidays')
         resource_pref_file = request.FILES['resource_pref_file']

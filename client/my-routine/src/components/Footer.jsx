@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
-
 function Footer() {
   const currentYear = new Date().getFullYear();
   const [isBeating, setIsBeating] = useState(false);
-
 
   return (
     <div className="flex flex-col md:flex-row justify-center md:justify-between items-center px-4 py-2 text-gray-100 bg-gray-900 text-center md:text-left">
@@ -23,8 +21,4 @@ function Footer() {
   );
 }
 
-
 export default Footer;
-
-
-

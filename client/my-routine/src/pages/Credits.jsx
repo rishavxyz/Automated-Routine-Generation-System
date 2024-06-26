@@ -1,7 +1,7 @@
 import React from "react";
 import image from "../components/img.jpeg";
 import dipanjan from "../components/dipanjan.jpg";
-import triasis from "../components/triasis.jpg";
+import triasis from "../components/triasish.jpg";
 import shirsha from "../components/shirsha.png";
 import rishav from "../components/rishav.jpg";
 import swapanSir from "../components/swapanSir.jpg";
@@ -27,7 +27,7 @@ function Credits() {
               className="h-24 w-24 rounded-full mb-4 sm:mb-0 sm:mr-5"
             />
             <div>
-              <h3 className="flex">Triasis Ghosh</h3>
+              <h3 className="flex">Dr. Triasis Ghosh</h3>
               <h3 className="flex items-center">
                 <IoIosMail className="mr-2" />
                 triasis.ghosh1234@gmail.com

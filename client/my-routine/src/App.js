@@ -23,7 +23,7 @@ function App() {
               <Route exact path="/" element={<Home />} />
               <Route path="/slotform" element={<SlotForm />} />
               <Route path="/form" element={<Form />} />
-              <Route path='/resource_pref' element={<ResourceScheduler />} />
+              <Route path='/resource_pref' element = {<ResourceScheduler/>} />
               <Route path="/instructions" element={<Instructions />} />
               <Route path="/routines" element={<Routines />} />
               <Route path="/display" element={<Display />} />

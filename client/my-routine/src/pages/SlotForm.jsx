@@ -4,12 +4,10 @@ import { FormDataContext } from "../context/FormDataContext";
 import { useNavigate } from "react-router-dom";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
-
 function SlotForm() {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
 
   const {
     formData,
@@ -24,13 +22,10 @@ function SlotForm() {
     setWeeklyHoliday,
   } = useContext(FormDataContext);
 
-
   const navigate = useNavigate();
-
 
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
-
 
   const daysOfWeek = [
     "Monday",
@@ -42,11 +37,9 @@ function SlotForm() {
     "Sunday",
   ];
 
-
   const handleFileChange = (e) => {
     setCourseFile(e.target.files[0]);
   };
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -57,13 +50,11 @@ function SlotForm() {
     }
   };
 
-
   const handleCheckboxChange = (index) => {
     const newHolidays = [...weeklyHoliday];
     newHolidays[index] = !newHolidays[index];
     setWeeklyHoliday(newHolidays);
   };
-
 
   const validateForm = () => {
     if (!courseFile) {
@@ -82,16 +73,13 @@ function SlotForm() {
     return true;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
       return;
     }
 
-
     setLoading(true);
-
 
     const uploadData = new FormData();
     uploadData.append("courseFile", courseFile);
@@ -104,7 +92,6 @@ function SlotForm() {
         isHoliday ? "true" : "false"
       );
     });
-
 
     try {
       const res = await axios.post("http://localhost:8000/slots/", uploadData, {
@@ -121,40 +108,33 @@ function SlotForm() {
     }
   };
 
-
   const handleSort = () => {
     if (dragItem.current && dragOverItem.current) {
       const { listKey: dragItemListKey, index: dragItemIndex } =
         dragItem.current;
       const { index: dragOverItemIndex } = dragOverItem.current;
 
-
       const draggedItemContent = response[dragItemListKey][dragItemIndex];
       const updatedList = [...response[dragItemListKey]];
       updatedList.splice(dragItemIndex, 1);
       updatedList.splice(dragOverItemIndex, 0, draggedItemContent);
-
 
       const newResponse = {
         ...response,
         [dragItemListKey]: updatedList,
       };
 
-
       setResponse(newResponse);
       setFormData(newResponse);
-
 
       dragItem.current = null;
       dragOverItem.current = null;
     }
   };
 
-
   const handleDelete = (listKey, index) => {
     const updatedList = [...response[listKey]];
     updatedList.splice(index, 1);
-
 
     setResponse((prevState) => ({
       ...prevState,
@@ -162,29 +142,25 @@ function SlotForm() {
     }));
   };
 
-
   const handleModifiedSubmit = () => {
     localStorage.setItem("slot_pref", JSON.stringify(response));
     navigate("/form");
   };
 
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-center items-center min-h-screen bg-gray-700">
+        <div className="flex justify-center items-center min-h-[90vh] bg-gray-700">
           <div className="py-6 px-7 my-auto w-full rounded-2xl bg-white md:w-2/5">
             <p className="flex text-2xl text-gray-900 font-bold pb-2 mb-4 border-b-2 border-gray-500">
               Slot Generation Form
             </p>
-
 
             {error && (
               <div className="bg-red-400 text-white p-4 mb-4 rounded-lg">
                 {error}
               </div>
             )}
-
 
             <div className="text-lg relative flex flex-col mb-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
@@ -202,7 +178,6 @@ function SlotForm() {
               />
             </div>
 
-
             <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
                 Number of Class Slots in a Day*
@@ -217,7 +192,6 @@ function SlotForm() {
               />
             </div>
 
-
             <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
                 Break After Which Period*
@@ -231,7 +205,6 @@ function SlotForm() {
                 className="outline-none border border-gray-300 rounded-md px-2.5 py-1.5"
               />
             </div>
-
 
             <div className="text-sm relative flex flex-col md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
@@ -255,10 +228,9 @@ function SlotForm() {
               </div>
             </div>
 
-
-            <div className="text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600">
+            <div>
               {loading ? (
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center text-base cursor-pointer w-full font-medium text-center bg-gray-700 text-white mt-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600">
                   <svg
                     className="animate-spin h-5 w-5 mr-3 text-white"
                     xmlns="http://www.w3.org/2000/svg"
@@ -285,14 +257,13 @@ function SlotForm() {
                 <input
                   type="submit"
                   value="Submit"
-                  className="cursor-pointer"
+                  className="text-base cursor-pointer w-full font-medium text-center bg-gray-700 text-white mt-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600"
                 />
               )}
             </div>
           </div>
         </div>
       </form>
-
 
       {response && (
         <div className="flex justify-center items-center min-h-screen bg-gray-700">
@@ -353,10 +324,4 @@ function SlotForm() {
   );
 }
 
-
 export default SlotForm;
-
-
-
-
-

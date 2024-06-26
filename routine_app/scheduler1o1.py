@@ -12,7 +12,7 @@ class Scheduler(Schedule):
         def adjust_pref(key,df):
             '''This method is to update the slot preference list for one resource.
             This is called for all the resources'''
-            
+            #print(df)
             pref_sch_str=df.loc[df["RESOURCE_ID"]==key]["PREFERRED_SLOTS"]
             pref_sch_list=str(pref_sch_str.max()).split('.')
             less_pref_slots=[]

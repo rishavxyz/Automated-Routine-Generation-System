@@ -3,7 +3,6 @@ import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import { MdOutlineFileDownload } from "react-icons/md";
 
-
 const Display = () => {
   const [routine, setRoutine] = useState(null);
   const [classStartTime, setClassStartTime] = useState("");
@@ -15,25 +14,21 @@ const Display = () => {
   const [facultySlot, setFacultySlot] = useState(null);
   const [sectionSlot, setSectionSlot] = useState(null);
 
-
   useEffect(() => {
     const storedRoutine = localStorage.getItem("selectedRoutine");
     if (storedRoutine) {
       const parsedRoutine = JSON.parse(storedRoutine);
       setRoutine(parsedRoutine);
 
-
       setRoomSlot(parsedRoutine.RoomSLot);
       setFacultySlot(parsedRoutine.FacultySLot);
       setSectionSlot(parsedRoutine.SectionSLot);
     }
 
-
     const storedTeacherData = localStorage.getItem("teacherData");
     if (storedTeacherData) {
       setTeacherData(JSON.parse(storedTeacherData));
     }
-
 
     const storedClassStartTime = localStorage.getItem("classStartTime");
     const storedClassDuration = localStorage.getItem("classDuration");
@@ -45,11 +40,9 @@ const Display = () => {
     setBreakDuration(storedBreakDuration || "");
   }, []);
 
-
   const downloadRoomExcel = () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Sheet1");
-
 
     const headerRow = worksheet.addRow([
       "ROOM_NO",
@@ -59,11 +52,9 @@ const Display = () => {
       "PREFERRED_SLOTS",
     ]);
 
-
     headerRow.eachCell((cell) => {
       cell.font = { bold: true };
     });
-
 
     Object.entries(roomSlot).forEach(([roomNo, roomData]) => {
       worksheet.addRow([
@@ -75,7 +66,6 @@ const Display = () => {
       ]);
     });
 
-
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -84,11 +74,9 @@ const Display = () => {
     });
   };
 
-
   const downloadSectionExcel = () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Sheet1");
-
 
     const headerRow = worksheet.addRow([
       "DIVISION_TITLE",
@@ -98,11 +86,9 @@ const Display = () => {
       "PREFERRED_SLOTS",
     ]);
 
-
     headerRow.eachCell((cell) => {
       cell.font = { bold: true };
     });
-
 
     Object.entries(sectionSlot).forEach(([sectionName, sectionData]) => {
       worksheet.addRow([
@@ -114,7 +100,6 @@ const Display = () => {
       ]);
     });
 
-
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -123,11 +108,9 @@ const Display = () => {
     });
   };
 
-
   const downloadFacultyExcel = () => {
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Sheet1");
-
 
     const headerRow = worksheet.addRow([
       "FACULTY_ID",
@@ -138,11 +121,9 @@ const Display = () => {
       "PREFERRED_SLOTS",
     ]);
 
-
     headerRow.eachCell((cell) => {
       cell.font = { bold: true };
     });
-
 
     Object.entries(facultySlot).forEach(([facultyId, facultyData]) => {
       worksheet.addRow([
@@ -155,7 +136,6 @@ const Display = () => {
       ]);
     });
 
-
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -164,14 +144,11 @@ const Display = () => {
     });
   };
 
-
   const exportToExcel = () => {
     const workbook = new ExcelJS.Workbook();
 
-
     groupKeys.forEach((groupKey) => {
       const worksheet = workbook.addWorksheet(`${groupKey}`);
-
 
       const headerRow = [
         "Day / Time",
@@ -186,7 +163,6 @@ const Display = () => {
         }),
       ];
 
-
       headerRow.splice(
         parseInt(breakSlot) + 1,
         0,
@@ -197,9 +173,7 @@ const Display = () => {
         )
       );
 
-
       worksheet.addRow(headerRow);
-
 
       Object.keys(routine[groupKey]).forEach((dayKey, dayIndex) => {
         const row = [
@@ -216,25 +190,19 @@ const Display = () => {
           }),
         ];
 
-
         row.splice(parseInt(breakSlot) + 1, 0, "Break");
-
 
         worksheet.addRow(row);
       });
-
 
       for (let i = 0; i < 4; i++) {
         worksheet.addRow([]);
       }
 
-
       const facultyHeader = ["Faculty", "Allocated Subject"];
       worksheet.addRow(facultyHeader);
 
-
       const teacherSubjectSet = new Set();
-
 
       Object.keys(teacherSchedule).forEach((teacher) => {
         teacherSchedule[teacher].forEach((schedule) => {
@@ -243,7 +211,6 @@ const Display = () => {
             const teacherName = teacherData[teacherCode] || teacherCode;
             const teacherSubjectPair = `${teacherName} [${teacherCode}]`;
 
-
             if (!teacherSubjectSet.has(teacherSubjectPair)) {
               teacherSubjectSet.add(teacherSubjectPair);
               worksheet.addRow([teacherSubjectPair, schedule.subject]);
@@ -251,7 +218,6 @@ const Display = () => {
           }
         });
       });
-
 
       headerRow.forEach((_, colIndex) => {
         if (colIndex + 1 <= worksheet.columnCount) {
@@ -274,7 +240,6 @@ const Display = () => {
         }
       });
 
-
       facultyHeader.forEach((_, colIndex) => {
         const cell = worksheet
           .getRow(worksheet.rowCount - teacherSubjectSet.size)
@@ -296,7 +261,6 @@ const Display = () => {
         };
       });
 
-
       worksheet.eachRow((row, rowIndex) => {
         row.eachCell((cell) => {
           cell.border = {
@@ -306,7 +270,6 @@ const Display = () => {
             right: { style: "thin" },
           };
         });
-
 
         if (rowIndex > 1 && rowIndex <= daysOfWeek.length + 1) {
           const dayCell = row.getCell(1);
@@ -325,7 +288,6 @@ const Display = () => {
             bottom: { style: "thin" },
             right: { style: "thin" },
           };
-
 
           if (parseInt(breakSlot) + 2 <= row.cellCount) {
             const breakCell = row.getCell(parseInt(breakSlot) + 2);
@@ -349,12 +311,9 @@ const Display = () => {
       });
     });
 
-
     const teacherWorksheet = workbook.addWorksheet("Faculty Schedule");
 
-
     const teacherWsData = [["Faculty", "Day", "Time", "Section", "Subject"]];
-
 
     Object.keys(teacherSchedule).forEach((teacher) => {
       teacherSchedule[teacher].forEach((schedule) => {
@@ -377,9 +336,7 @@ const Display = () => {
       teacherWsData.push(["", "", "", "", ""]);
     });
 
-
     teacherWorksheet.addRows(teacherWsData);
-
 
     teacherWsData[0].forEach((_, colIndex) => {
       if (colIndex + 1 <= teacherWorksheet.columnCount) {
@@ -402,7 +359,6 @@ const Display = () => {
       }
     });
 
-
     teacherWorksheet.eachRow((row) => {
       row.eachCell((cell) => {
         cell.border = {
@@ -414,7 +370,6 @@ const Display = () => {
       });
     });
 
-
     workbook.xlsx.writeBuffer().then((buffer) => {
       const blob = new Blob([buffer], { type: "application/octet-stream" });
       const link = document.createElement("a");
@@ -423,7 +378,6 @@ const Display = () => {
       link.click();
     });
   };
-
 
   if (!routine) {
     return (
@@ -438,7 +392,6 @@ const Display = () => {
     );
   }
 
-
   const totalSlots = routine["Total Slots"];
   const slotNumbers = Array.from({ length: totalSlots }, (_, i) => i);
   const daysOfWeek = [
@@ -451,7 +404,6 @@ const Display = () => {
     "Sunday",
   ];
 
-
   const generateSlotTime = (
     startTime,
     slotIndex,
@@ -461,53 +413,40 @@ const Display = () => {
   ) => {
     const [startHour, startMinute] = startTime.split(":").map(Number);
 
-
     const totalMinutes = startHour * 60 + startMinute;
-
 
     let additionalBreak = 0;
     if (slotIndex >= breakSlot) {
       additionalBreak = parseInt(breakDuration);
     }
 
-
     const newTimeMinutes =
       totalMinutes + slotIndex * classDuration + additionalBreak;
-
 
     const newHour = Math.floor(newTimeMinutes / 60);
     const newMinute = newTimeMinutes % 60;
 
-
     const formattedHour = String(newHour).padStart(2, "0");
     const formattedMinute = String(newMinute).padStart(2, "0");
 
-
     return `${formattedHour}:${formattedMinute}`;
   };
-
 
   const generateBreakTime = (startTime, slotIndex, classDuration) => {
     const [startHour, startMinute] = startTime.split(":").map(Number);
 
-
     const totalMinutes = startHour * 60 + startMinute;
 
-
     const newTimeMinutes = totalMinutes + slotIndex * classDuration;
-
 
     const newHour = Math.floor(newTimeMinutes / 60);
     const newMinute = newTimeMinutes % 60;
 
-
     const formattedHour = String(newHour).padStart(2, "0");
     const formattedMinute = String(newMinute).padStart(2, "0");
 
-
     return `${formattedHour}:${formattedMinute}`;
   };
-
 
   const groupKeys = Object.keys(routine).filter(
     (key) =>
@@ -519,9 +458,7 @@ const Display = () => {
       key !== "SectionSLot"
   );
 
-
   const teacherSchedule = {};
-
 
   groupKeys.forEach((groupKey) => {
     Object.keys(routine[groupKey]).forEach((dayKey, dayIndex) => {
@@ -550,15 +487,14 @@ const Display = () => {
     });
   });
 
-
   return (
-    <div className="display">
-      <div className="flex justify-between items-center m-4 mb-8">
+    <div className="overflow-x-hidden">
+      <div className="flex flex-wrap justify-between items-center m-4 mb-8">
         <h1 className="text-gray-900 bg-white font-bold text-3xl">
           Routines with {parseFloat(routine["Faculty Fitness"]).toFixed(2)}%
           Fitness
         </h1>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap justify-between items-center">
           <button
             onClick={downloadRoomExcel}
             className="flex items-center mr-2 text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 px-6 py-2.5 border-none outline-none rounded-md hover:bg-gray-600"
@@ -579,16 +515,15 @@ const Display = () => {
           </button>
           <button
             onClick={exportToExcel}
-            className="flex items-center text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 px-6 py-2.5 border-none outline-none rounded-md hover:bg-gray-600"
+            className="flex items-center mr-2 text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 px-6 py-2.5 border-none outline-none rounded-md hover:bg-gray-600"
           >
-            Routine <MdOutlineFileDownload className="text-2xl ml-2" />
+            Routine Data <MdOutlineFileDownload className="text-2xl ml-2" />
           </button>
         </div>
       </div>
 
-
       {groupKeys.map((groupKey) => (
-        <div key={groupKey} className="m-4">
+        <div key={groupKey} className="m-4 overflow-x-scroll">
           <h2 className="text-xl font-semibold mb-2">{groupKey}</h2>
           <table className="table-auto w-full mb-10 border-collapse border border-gray-900 rounded-lg overflow-hidden">
             <thead>
@@ -619,7 +554,6 @@ const Display = () => {
               </tr>
             </thead>
 
-
             <tbody>
               {Object.keys(routine[groupKey]).map((dayKey, dayIndex) => (
                 <tr
@@ -631,7 +565,7 @@ const Display = () => {
                   </td>
                   {slotNumbers.map((slot, slotIndex) => (
                     <React.Fragment key={slot}>
-                      <td className="border border-black p-2">
+                      <td className="border border-black p-2 min-w-40">
                         {routine[groupKey][dayKey][slot] ? (
                           <>
                             <div>
@@ -659,7 +593,6 @@ const Display = () => {
                         )}
                       </td>
 
-
                       {slotIndex + 1 === parseInt(breakSlot) && (
                         <td className="font-semibold bg-gray-700 text-white border border-gray-100 p-2">
                           Break
@@ -674,8 +607,7 @@ const Display = () => {
         </div>
       ))}
 
-
-      <div className="m-4">
+      <div className="m-4 overflow-x-scroll">
         <h2 className="text-lg font-semibold mb-2">Faculty Schedule</h2>
         <table className="table-auto w-full mb-10 border-collapse border border-black rounded-lg overflow-hidden">
           <thead>
@@ -730,10 +662,4 @@ const Display = () => {
   );
 };
 
-
 export default Display;
-
-
-
-
-

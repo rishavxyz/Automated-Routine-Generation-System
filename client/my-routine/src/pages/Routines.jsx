@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const Routine = () => {
   const [routineData, setRoutineData] = useState(null);
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const storedData = localStorage.getItem("routineData");
@@ -14,19 +12,16 @@ const Routine = () => {
     }
   }, []);
 
-
   useEffect(() => {
     if (routineData) {
       localStorage.setItem("teacherData", JSON.stringify(routineData["Teacher Data"]));
     }
   }, [routineData]);
 
-
   const handleClick = (routineKey) => {
     localStorage.setItem("selectedRoutine", JSON.stringify(routineData[routineKey]));
     navigate("/display");
   };
-
 
   return (
     <div className="flex justify-center items-center min-h-screen py-44 bg-gray-700">
@@ -34,7 +29,6 @@ const Routine = () => {
         <p className="flex text-2xl text-gray-900 font-bold pb-2 mb-4 border-b-2 border-gray-500">
           Generated Routines
         </p>
-
 
         {routineData ? (
           <div>
@@ -94,10 +88,4 @@ const Routine = () => {
   );
 };
 
-
 export default Routine;
-
-
-
-
-

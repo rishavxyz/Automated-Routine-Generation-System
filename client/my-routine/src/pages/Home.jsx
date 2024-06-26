@@ -1,8 +1,7 @@
 import React from "react";
 import bg from "../components/bg.jpg";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { FaCircleExclamation } from "react-icons/fa6";
-
 
 function Home() {
   return (
@@ -50,7 +49,7 @@ function Home() {
                 <FaCircleExclamation className="mr-4" /> The Days and Slots are
                 customizable.
               </li>
-              <li className="flex items-center">
+              <li className="flex items-center mb-4">
                 <FaCircleExclamation className="mr-4" /> For more detailed
                 instructions
                 <Link
@@ -59,6 +58,17 @@ function Home() {
                 >
                   click here
                 </Link>
+              </li>
+              <li className="flex items-center">
+                <FaCircleExclamation className="mr-4" /> To add slot prefernces
+                in data files
+                <Link
+                  to="/resource_pref"
+                  className="text-gray-300 font-semibold underline mx-2 hover:text-white"
+                >
+                  click here
+                </Link>
+                or go to Generate Resource page
               </li>
             </ul>
           </div>
@@ -75,10 +85,4 @@ function Home() {
   );
 }
 
-
 export default Home;
-
-
-
-
-

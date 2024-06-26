@@ -1,25 +1,25 @@
-import React from 'react'
-import Markdown from 'react-markdown'
-import zip from '../components/Template.zip'
+import React from 'react';
+import Markdown from 'react-markdown';
+import zip from '../components/bg.jpg';
 // screenshots
-import s1 from '../components/ss1.jpg'
-import s2 from '../components/ss2.jpg'
-import s3 from '../components/img.jpeg'
+import s1 from '../components/ss1.png';
+import s2 from '../components/ss2.png';
+import s3 from '../components/ss3.png';
 
 const ss = [
-    { name: 'Faculty file'
+    { name: 'Class Slot Generation Form'
     , src: s1
-    , alt: 'The columns'
+    , alt: 'This form will take Course data along with some more inputs to create the class slots.'
     },
 
-    { name: 'Course file'
+    { name: 'Routine Generation Form'
     , src: s2
-    , alt: 'The columns'
+    , alt: 'This form will take Faculty data, Room data, and Section data along with some more inputs to create the Routines.'
     },
 
-    { name: 'Room file'
+    { name: 'Generated Routine'
     , src: s3
-    , alt: 'The columns'
+    , alt: 'This is the sample of a generated routines.'
     }
 ]
 
@@ -83,7 +83,7 @@ function Instructions() {
 
                 <p>Here is all the four files with predefined columns, you can download download the zip by clicking the button below and unzip it and fill each columns as you liking.</p>
 
-                <a href={zip} class="px-6 py-3 bg-gray-800 text-white no-underline" download="SampleTemplate.zip">Download sample files</a>
+                <a href={zip} class="px-6 py-3 bg-gray-800 text-white no-underline" download>Download sample files</a>
 
                 <p class="mt-8">Here are a picture of each XLSX files:</p>
 
@@ -103,4 +103,4 @@ function Instructions() {
   )
 }
 
-export default Instructions
+export default Instructions;
