@@ -149,7 +149,7 @@ function ResourceScheduler() {
 
             <div>
               <label className="flex text-base mb-0.5 xl:text-lg">
-                Select Option:
+                Select Key Field:
               </label>
               <select
                 name="keyField"
