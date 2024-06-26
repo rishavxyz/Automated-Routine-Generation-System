@@ -71,12 +71,11 @@ function ResourceScheduler() {
 
   const handleDownloadExcel = () => {
     if (response) {
-      const data = response.map((item) => ({
+      if(keyField==='FACULTY_ID'){const data = response.map((item) => ({
         FACULTY_ID: item.FACULTY_ID,
-        GRADE: item.GRADE,
+        DESIGNATION: item.DESIGNATION,
         FACULTY_NAME: item.FACULTY_NAME,
         SLOT_AVAILABILITY: item.SLOT_AVAILABILITY,
-        SLOT_AVAILABLE: item.SLOT_AVAILABLE,
         PREFERRED_SLOTS: item.PREFERRED_SLOTS,
       }));
 
@@ -87,7 +86,24 @@ function ResourceScheduler() {
 
       const fileName = "resource_data.xlsx";
 
-      XLSX.writeFile(workbook, fileName);
+      XLSX.writeFile(workbook, fileName)}
+
+      else if(keyField==='ROOM_NO'){const data = response.map((item) => ({
+        ROOM_NO: item.ROOM_NO,
+        ROOM_TYPE: item.ROOM_TYPE,
+        ROOM_CAPACITY: item.ROOM_CAPACITY,
+        SLOT_AVAILABILITY: item.SLOT_AVAILABILITY,
+        PREFERRED_SLOTS: item.PREFERRED_SLOTS,
+      }));
+
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(data);
+
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+      const fileName = "resource_data.xlsx";
+
+      XLSX.writeFile(workbook, fileName)}
     }
   };
 
@@ -161,7 +177,6 @@ function ResourceScheduler() {
                 <option value="">Select Key Field</option>
                 <option value="FACULTY_ID">FACULTY_ID</option>
                 <option value="ROOM_NO">ROOM_NO</option>
-                <option value="DIVISION_TITLE">DIVISION_TITLE</option>
               </select>
             </div>
 
