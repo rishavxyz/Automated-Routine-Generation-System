@@ -23,9 +23,9 @@ class SlotAPIView(APIView):
         #print(data)
         course_data = request.FILES['courseFile']
         slots_per_day = int(request.data.get('slotsPerDay'))
-        print(slots_per_day)
+        #print(slots_per_day)
         break_after = int(request.data.get('breakAfter'))
-        print(break_after)
+        #print(break_after)
         weeklyholiday = request.POST.getlist('weeklyHoliday')
         #weekly_holiday = weeklyholiday.strip('][').split(', ')
         weeklyholiday = weeklyholiday[0].split(',')
@@ -35,7 +35,7 @@ class SlotAPIView(APIView):
             if weeklyholiday[i] == "true" or weeklyholiday[i] == "[true" or weeklyholiday[i] == "true]":
                 weekly_holiday.append(i)
 
-        print(weekly_holiday)
+        #print(weekly_holiday)
         '''
         slots_per_day = request.POST.get('slotsPerDay')
         if slots_per_day is None:
@@ -49,7 +49,7 @@ class SlotAPIView(APIView):
         times= Times(slots_per_day,break_after,weekly_holiday)
         times.create_slot_pref(slot_durations=course_details.lecture_durations)
         #print(slot_pref)
-        print(times.slot_pref)
+        #print(times.slot_pref)
         return Response(times.slot_pref)
 
 class CsrfView(APIView):
@@ -81,7 +81,7 @@ class RoutineGenerationAPIView(APIView):
             slots_per_day = int(request.data.get('slotsPerDay'))
             slot_pref = json.loads(request.data.get('slot_pref'))
             slot_pref = {int(k): v for k, v in slot_pref.items()}
-            print(slot_pref)
+            #print(slot_pref)
             #slot_preference = json.loads(request.POST.get('slot_pref'))
             #print(slot_preference)
             breakAfter= int(request.data.get('breakAfter'))
@@ -90,7 +90,7 @@ class RoutineGenerationAPIView(APIView):
            # slot_pref1 = int(request.data.get('1'))
            # print(slot_pref1)
             weeklyholiday = weeklyholiday[0].split(',')
-            print(weeklyholiday)
+            #print(weeklyholiday)
             weekly_holiday = []
             for i in range(7):
                 if weeklyholiday[i] == "true":
@@ -142,8 +142,8 @@ class RoutineGenerationAPIView(APIView):
                 #times.create_slot_pref(slot_durations=course.lecture_durations)
                 
                 fn= Evaluator(resources)
-                print("Faculty's preference retained:",fn.faculty_conflict*100,"%")
-                print("Room's preference retained:",fn.room_conflict*100,"%")
+                #print("Faculty's preference retained:",fn.faculty_conflict*100,"%")
+                #print("Room's preference retained:",fn.room_conflict*100,"%")
 #print("Division's preference retained:",fitness.division_fitness*100,"%")
 
                 #schedule.display()
@@ -181,7 +181,7 @@ class RoutineGenerationAPIView(APIView):
         # Display the merged dataframe
             
             all_routines["Teacher Data"] = teacher_data
-            print(routines)
+            #print(routines)
             #json_str = json.dumps(all_routines, indent=None, separators=(", ", ": "))
             #print(json_str)
             # print(slots_per_day)
@@ -205,7 +205,7 @@ class RoutineGenerationAPIView(APIView):
         '''
             
         else:
-            print(serializer.errors)
+            #print(serializer.errors)
             return Response(serializer.errors, status=400)
         
 class ScheduleView(APIView):
@@ -218,10 +218,10 @@ class ScheduleView(APIView):
         resource_data_file = request.FILES['resource_data_file']
 
         # Process the files and data
-        data_df = resourcePrefUpdate(slots_per_day, weekly_holidays, pref_file=resource_pref_file, data_file=resource_data_file, key_field=key_field)
+        data_df = resourcePrefUpdate(slots_per_day, pref_file=resource_pref_file, data_file=resource_data_file, key_field=key_field)
         
         data_dict = data_df.to_dict(orient='records')
-        print(data_df)
+        #print(data_df)
         # Example of how to use data_df - print to console for debugging
         #print("DataFrame head: ", data_df.head())
 
