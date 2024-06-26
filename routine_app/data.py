@@ -2,7 +2,7 @@ import pandas as pd
 
 
 class Times:
-    slot_pref = {}
+    
 
     def create_slot_pref(self, slot_durations):
         for i in slot_durations:
@@ -22,6 +22,7 @@ class Times:
             self.slot_pref[i] = temp
 
     def __init__(self, slots_per_day, break_after, weekly_holiday):
+        self.slot_pref = {}
         self.slots_per_day = int(slots_per_day)
         self.recess = int(break_after)
         self.all_slots = [i + 1 for i in range(7 * self.slots_per_day)]

@@ -211,13 +211,14 @@ class RoutineGenerationAPIView(APIView):
 class ScheduleView(APIView):
 
     def post(self, request, *args, **kwargs):
+        key_field = request.data.get('key_field')
         slots_per_day = int(request.data.get('slots_per_day'))
         weekly_holidays = request.data.get('weekly_holidays')
         resource_pref_file = request.FILES['resource_pref_file']
         resource_data_file = request.FILES['resource_data_file']
 
         # Process the files and data
-        data_df = resourcePrefUpdate(slots_per_day, weekly_holidays, pref_file=resource_pref_file, data_file=resource_data_file, key_field=None)
+        data_df = resourcePrefUpdate(slots_per_day, weekly_holidays, pref_file=resource_pref_file, data_file=resource_data_file, key_field=key_field)
         
         data_dict = data_df.to_dict(orient='records')
         print(data_df)
