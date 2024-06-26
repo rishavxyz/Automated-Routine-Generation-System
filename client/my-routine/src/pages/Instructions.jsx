@@ -1,6 +1,6 @@
 import React from 'react';
 import Markdown from 'react-markdown';
-import zip from '../components/bg.jpg';
+import zip from '../components/Template.zip';
 // screenshots
 import s1 from '../components/ss1.png';
 import s2 from '../components/ss2.png';
@@ -83,7 +83,7 @@ function Instructions() {
 
                 <p>Here is all the four files with predefined columns, you can download download the zip by clicking the button below and unzip it and fill each columns as you liking.</p>
 
-                <a href={zip} class="px-6 py-3 bg-gray-800 text-white no-underline" download>Download sample files</a>
+                <a href={zip} class="px-6 py-3 bg-gray-800 text-white no-underline" download="TemplateFiles.zip">Download sample files</a>
 
                 <p class="mt-8">Here are a picture of each XLSX files:</p>
 
