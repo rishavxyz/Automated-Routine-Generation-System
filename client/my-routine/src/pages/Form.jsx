@@ -1,8 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { FormDataContext } from '../context/FormDataContext';
-
+import { FormDataContext } from "../context/FormDataContext";
 
 const Form = () => {
   const {
@@ -28,7 +27,7 @@ const Form = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedSlotPref = localStorage.getItem('slot_pref');
+    const storedSlotPref = localStorage.getItem("slot_pref");
     if (storedSlotPref) {
       setSlotPref(JSON.parse(storedSlotPref));
     }
@@ -50,18 +49,11 @@ const Form = () => {
   };
 
   const validateForm = () => {
-    if (
-      !formData.facultyFile ||
-      !formData.sectionFile ||
-      !formData.roomFile
-    ) {
+    if (!formData.facultyFile || !formData.sectionFile || !formData.roomFile) {
       setError("All Files must be Uploaded");
       return false;
     }
-    if (
-      !form.classStartTime ||
-      !/^\d{2}:\d{2}$/.test(form.classStartTime)
-    ) {
+    if (!form.classStartTime || !/^\d{2}:\d{2}$/.test(form.classStartTime)) {
       setError("Enter Valid Class Start Time in HH:MM format");
       return false;
     }
@@ -86,14 +78,14 @@ const Form = () => {
     setLoading(true);
 
     const formDataToSend = new FormData();
-    formDataToSend.append('facultyFile', formData.facultyFile);
-    formDataToSend.append('courseFile', courseFile);
-    formDataToSend.append('sectionFile', formData.sectionFile);
-    formDataToSend.append('roomFile', formData.roomFile);
-    formDataToSend.append('slotsPerDay', slotsPerDay);
-    formDataToSend.append('breakAfter', breakAfter);
-    formDataToSend.append('weeklyHoliday', JSON.stringify(weeklyHoliday));
-    formDataToSend.append('slot_pref', JSON.stringify(slotPref));
+    formDataToSend.append("facultyFile", formData.facultyFile);
+    formDataToSend.append("courseFile", courseFile);
+    formDataToSend.append("sectionFile", formData.sectionFile);
+    formDataToSend.append("roomFile", formData.roomFile);
+    formDataToSend.append("slotsPerDay", slotsPerDay);
+    formDataToSend.append("breakAfter", breakAfter);
+    formDataToSend.append("weeklyHoliday", JSON.stringify(weeklyHoliday));
+    formDataToSend.append("slot_pref", JSON.stringify(slotPref));
 
     localStorage.setItem("classStartTime", form.classStartTime);
     localStorage.setItem("classDuration", form.classDuration);
@@ -101,11 +93,15 @@ const Form = () => {
     localStorage.setItem("breakDuration", form.breakDuration);
 
     try {
-      const response = await axios.post('http://localhost:8000/generate_routine/', formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8000/generate_routine/",
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setResponse(response.data);
       setError("");
       localStorage.setItem("routineData", JSON.stringify(response.data));
@@ -138,7 +134,8 @@ const Form = () => {
                   Faculty Details*
                 </label>
                 <input
-                  type="file" accept=".xlsx"
+                  type="file"
+                  accept=".xlsx"
                   onChange={(e) => handleFileChange(e, "facultyFile")}
                   className="
                     file:mr-2.5 file:py-1.5 file:px-4
@@ -153,7 +150,8 @@ const Form = () => {
                   Room Details*
                 </label>
                 <input
-                  type="file" accept=".xlsx"
+                  type="file"
+                  accept=".xlsx"
                   onChange={(e) => handleFileChange(e, "sectionFile")}
                   className="
                     file:mr-2.5 file:py-1.5 file:px-4
@@ -170,7 +168,8 @@ const Form = () => {
                   Section Details*
                 </label>
                 <input
-                  type="file" accept=".xlsx"
+                  type="file"
+                  accept=".xlsx"
                   onChange={(e) => handleFileChange(e, "roomFile")}
                   className="
                     file:mr-2.5 file:py-1.5 file:px-4
@@ -226,9 +225,9 @@ const Form = () => {
               />
             </div>
 
-            <div className="text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600">
+            <div>
               {loading ? (
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600">
                   <svg
                     className="animate-spin h-5 w-5 mr-3 text-white"
                     xmlns="http://www.w3.org/2000/svg"
@@ -255,7 +254,7 @@ const Form = () => {
                 <input
                   type="submit"
                   value="Submit"
-                  className="cursor-pointer"
+                  className="text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600"
                 />
               )}
             </div>

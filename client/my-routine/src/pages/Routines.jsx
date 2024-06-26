@@ -20,6 +20,7 @@ const Routine = () => {
 
   const handleClick = (routineKey) => {
     localStorage.setItem("selectedRoutine", JSON.stringify(routineData[routineKey]));
+    window.scrollTo(0, 0);
     navigate("/display");
   };
 

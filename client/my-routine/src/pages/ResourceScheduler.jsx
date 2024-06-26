@@ -1,34 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FormDataContext } from "../context/FormDataContext";
 import * as XLSX from "xlsx";
+import { MdOutlineFileDownload } from "react-icons/md";
 
 function ResourceScheduler() {
-  const [formData, setFormData] = useState({
-    slotsPerDay: "",
-    resourcePrefFile: null,
-    resourceDataFile: null,
-    keyField: "", // Corrected to match dropdown field name
-  });
+  const [slotsPerDay, setSlotsPerDay] = useState("");
+  const [resourcePrefFile, setResourcePrefFile] = useState(null);
+  const [resourceDataFile, setResourceDataFile] = useState(null);
+  const [keyField, setKeyField] = useState("");
   const [response, setResponse] = useState(null);
   const [csrfToken, setCsrfToken] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const { weeklyHoliday, setWeeklyHoliday } = useContext(FormDataContext);
-
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
 
   useEffect(() => {
-    // Fetch CSRF token
     axios
       .get("http://localhost:8000/csrf/", { withCredentials: true })
       .then((response) => {
@@ -39,26 +23,20 @@ function ResourceScheduler() {
       });
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleSlotsChange = (e) => {
+    setSlotsPerDay(e.target.value);
   };
 
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: files[0],
-    }));
+  const handlePrefFileChange = (e) => {
+    setResourcePrefFile(e.target.files[0]);
   };
 
-  const handleCheckboxChange = (index) => {
-    const newHolidays = [...weeklyHoliday];
-    newHolidays[index] = !newHolidays[index];
-    setWeeklyHoliday(newHolidays);
+  const handleDataFileChange = (e) => {
+    setResourceDataFile(e.target.files[0]);
+  };
+
+  const handleKeyChange = (e) => {
+    setKeyField(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -66,35 +44,26 @@ function ResourceScheduler() {
 
     setLoading(true);
 
-    const submissionData = new FormData();
-    submissionData.append("slots_per_day", formData.slotsPerDay);
-    submissionData.append("weekly_holidays", JSON.stringify(weeklyHoliday));
-    weeklyHoliday.forEach((isHoliday, index) => {
-      submissionData.append(
-        `weeklyHoliday[${index}]`,
-        isHoliday ? "true" : "false"
-      );
-    });
-    submissionData.append("resource_pref_file", formData.resourcePrefFile);
-    submissionData.append("resource_data_file", formData.resourceDataFile);
-    submissionData.append("key_field", formData.keyField);
+    const formData = new FormData();
+    formData.append("slots_per_day", slotsPerDay);
+    formData.append("resource_pref_file", resourcePrefFile);
+    formData.append("resource_data_file", resourceDataFile);
+    formData.append("key_field", keyField);
 
     try {
       const res = await axios.post(
         "http://localhost:8000/generate_resource/",
-        submissionData,
+        formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            "X-CSRFToken": csrfToken,
           },
-          withCredentials: true,
         }
       );
+      console.log("Response from server:", res);
       setResponse(res.data);
     } catch (err) {
       console.error("Error:", err);
-      setError("There was an error submitting the form. Please try again."); // Set error message
     } finally {
       setLoading(false);
     }
@@ -130,85 +99,50 @@ function ResourceScheduler() {
             <p className="flex text-2xl text-gray-900 font-bold pb-2 mb-4 border-b-2 border-gray-500">
               Resource Scheduler
             </p>
-
-            {error && (
-              <div className="bg-red-400 text-white p-4 mb-4 rounded-lg">
-                {error}
-              </div>
-            )}
-
             <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">
                 Number of Class Slots in a Day*
               </label>
               <input
                 type="number"
-                id="slotsPerDay"
-                name="slotsPerDay"
+                value={slotsPerDay}
                 placeholder="Eg.: 6 or 8"
-                value={formData.slotsPerDay}
-                onChange={handleChange}
                 className="outline-none border border-gray-300 rounded-md px-2.5 py-1.5"
+                onChange={handleSlotsChange}
                 required
               />
             </div>
 
-            <div className="text-sm relative flex flex-col md:text-base xl:text-base">
-              <label className="flex text-base mb-0.5 xl:text-lg">
-                Weekly Holidays:
-              </label>
-              <div className="grid grid-cols-4 gap-4">
-                {daysOfWeek.map((day, index) => (
-                  <div key={index} className="flex items-center mr-4">
-                    <input
-                      type="checkbox"
-                      id={`holiday${index}`}
-                      name={`holiday${index}`}
-                      checked={weeklyHoliday[index]}
-                      onChange={() => handleCheckboxChange(index)}
-                    />
-                    <label htmlFor={`holiday${index}`} className="ml-1">
-                      {day}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-5 md:flex">
+            <div className="md:flex">
               <div className="text-lg relative flex flex-col mb-2.5 md:text-base xl:text-base">
                 <label className="flex text-base mb-0.5 xl:text-lg">
-                  Resource Preference File*
+                  Resource Preference File:
                 </label>
                 <input
                   type="file"
-                  accept=".xlsx"
-                  name="resourcePrefFile"
-                  onChange={handleFileChange}
-                  required
+                  onChange={handlePrefFileChange}
                   className="
                     file:mr-2.5 file:py-1.5 file:px-4
                     file:rounded-md file:border file:border-gray-300
                     file:text-sm file:text-gray-500
                     file:bg-white hover:file:bg-gray-200"
+                  required
                 />
               </div>
 
-              <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
+              <div className="text-lg relative flex flex-col mb-2.5 md:text-base xl:text-base">
                 <label className="flex text-base mb-0.5 xl:text-lg">
-                  Resource Data File*
+                  Resource Data File:
                 </label>
                 <input
                   type="file"
-                  accept=".xlsx"
-                  name="resourceDataFile"
-                  onChange={handleFileChange}
-                  required
+                  onChange={handleDataFileChange}
                   className="
                     file:mr-2.5 file:py-1.5 file:px-4
                     file:rounded-md file:border file:border-gray-300
                     file:text-sm file:text-gray-500
                     file:bg-white hover:file:bg-gray-200"
+                  required
                 />
               </div>
             </div>
@@ -219,8 +153,8 @@ function ResourceScheduler() {
               </label>
               <select
                 name="keyField"
-                value={formData.keyField}
-                onChange={handleChange}
+                value={keyField}
+                onChange={handleKeyChange}
                 className="flex outline-none border border-gray-300 rounded-md px-2.5 py-1.5"
                 required
               >
@@ -264,12 +198,18 @@ function ResourceScheduler() {
                 />
               )}
             </div>
+
+            {response && (
+              <button
+                onClick={handleDownloadExcel}
+                className="flex justify-center items-center text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 px-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600"
+              >
+                Download Excel <MdOutlineFileDownload className="text-2xl ml-2" />
+              </button>
+            )}
           </div>
         </div>
       </form>
-      {response && (
-        <button onClick={handleDownloadExcel} className="text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 px-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600">Download Excel</button>
-      )}
     </div>
   );
 }
