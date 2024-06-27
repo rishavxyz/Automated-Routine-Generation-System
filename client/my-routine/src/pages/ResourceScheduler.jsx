@@ -174,7 +174,7 @@ function ResourceScheduler() {
                 className="flex outline-none border border-gray-300 rounded-md px-2.5 py-1.5"
                 required
               >
-                <option value="">Select Key Field</option>
+                <option value="">--Select--</option>
                 <option value="FACULTY_ID">FACULTY_ID</option>
                 <option value="ROOM_NO">ROOM_NO</option>
               </select>

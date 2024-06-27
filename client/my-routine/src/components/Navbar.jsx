@@ -27,7 +27,7 @@ function Navbar() {
           <Link to="/instructions" className="hover:underline block">Instructions</Link>
         </li>
         <li className='mt-2 md:mt-0 md:mr-8'>
-          <Link to="/resource_pref" className="hover:underline block">Generate Resource</Link>
+          <Link to="/resource_pref" className="hover:underline block">Update Preference</Link>
         </li>
         <li className='mt-2 md:mt-0 md:mr-8'>
           <Link to="/routines" className="hover:underline block">Routines</Link>

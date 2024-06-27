@@ -68,7 +68,7 @@ function Home() {
                 >
                   click here
                 </Link>
-                or go to Generate Resource page
+                or go to Update Preference page
               </li>
             </ul>
           </div>
