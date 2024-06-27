@@ -42,7 +42,7 @@ const Routine = () => {
                   className="bg-gray-700 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600"
                   onClick={() => handleClick("Routine0")}
                 >
-                  Fitness:{" "}
+                  Preference Retained:{" "}
                   {parseFloat(routineData.Routine0["Faculty Fitness"]).toFixed(
                     2
                   )}
@@ -57,7 +57,7 @@ const Routine = () => {
                   className="bg-gray-700 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600"
                   onClick={() => handleClick("Routine1")}
                 >
-                  Fitness:{" "}
+                  Preference Retained:{" "}
                   {parseFloat(routineData.Routine1["Faculty Fitness"]).toFixed(
                     2
                   )}
@@ -72,7 +72,7 @@ const Routine = () => {
                   className="bg-gray-700 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600"
                   onClick={() => handleClick("Routine2")}
                 >
-                  Fitness:{" "}
+                  Preference Retained:{" "}
                   {parseFloat(routineData.Routine2["Faculty Fitness"]).toFixed(
                     2
                   )}

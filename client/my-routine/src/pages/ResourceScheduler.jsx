@@ -113,7 +113,7 @@ function ResourceScheduler() {
         <div className="flex justify-center items-center min-h-[90vh] bg-gray-700">
           <div className="py-6 px-7 my-auto w-full rounded-2xl bg-white md:w-2/5">
             <p className="flex text-2xl text-gray-900 font-bold pb-2 mb-4 border-b-2 border-gray-500">
-              Resource Scheduler
+              Update Teacher/Room Preference in Dataset
             </p>
             <div className="text-sm relative flex flex-col mb-2.5 md:text-base xl:text-base">
               <label className="flex text-base mb-0.5 xl:text-lg">

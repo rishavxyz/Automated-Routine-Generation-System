@@ -491,8 +491,7 @@ const Display = () => {
     <div className="overflow-x-hidden">
       <div className="flex flex-wrap justify-between items-center m-4 mb-8">
         <h1 className="text-gray-900 bg-white font-bold text-3xl">
-          Routines with {parseFloat(routine["Faculty Fitness"]).toFixed(2)}%
-          Fitness
+          Preference Retained: {parseFloat(routine["Faculty Fitness"]).toFixed(2)}%
         </h1>
         <div className="flex flex-wrap justify-between items-center">
           <button
