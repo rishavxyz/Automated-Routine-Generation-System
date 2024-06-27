@@ -278,7 +278,7 @@ function SlotForm() {
                   className="mb-6 p-4 bg-white rounded shadow-md w-full"
                 >
                   <h3 className="text-lg font-semibold mb-2 text-gray-800">
-                    Classes of Slot {key}
+                    Classes of duration {key}
                   </h3>
                   <ul className="grid grid-cols-4 gap-2 pl-0">
                     {response[key].map((value, index) => (
@@ -314,7 +314,7 @@ function SlotForm() {
                 onClick={handleModifiedSubmit}
                 className="text-base cursor-pointer font-medium text-center bg-gray-700 text-white mt-4 px-4 py-2.5 border-none outline-none rounded-md hover:bg-gray-600"
               >
-                Submit Modified Data
+                Submit Slots
               </button>
             </div>
           </div>

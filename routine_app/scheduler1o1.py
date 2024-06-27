@@ -131,6 +131,8 @@ class Scheduler(Schedule):
             if not flag:
                 self.unallocated.append(self.lectures[i])
 
+
+        print("Unallocated Classes: ",self.unallocated)
         self.arrange_schedule()
 
     def getResources(self):
