@@ -26,7 +26,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the less preferred slots for monday
         try:
-            off_slots = [int(i)-1 for i in list(map(str.strip,tuple.MONDAY_OFF_SLOTS.split(','))) if not int(i)-1<0]
+            off_slots = [int(float(i))-1 for i in list(map(str.strip,tuple.MONDAY_OFF_SLOTS.split(','))) if not int(float(i))-1<0]
             day = list(bin(int(pref_str[0], 16))[2:].rjust(no_slots_per_day,'0'))
             for slot in off_slots:
                 day[-int(slot)-1] = '1'
@@ -37,7 +37,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the less preferred slots for tuesday
         try:
-            off_slots = [int(i)-1 for i in list(map(str.strip,tuple.TUESDAY_OFF_SLOTS.split(','))) if not int(i)-1<0]
+            off_slots = [int(float(i))-1 for i in list(map(str.strip,tuple.TUESDAY_OFF_SLOTS.split(','))) if not int(float(i))-1<0]
             day = list(bin(int(pref_str[1], 16))[2:].rjust(no_slots_per_day,'0'))
             for slot in off_slots:
                 day[-int(slot)-1] = '1'
@@ -48,7 +48,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the less preferred slots for wednesday
         try:
-            off_slots = [int(i)-1 for i in list(map(str.strip,tuple.WEDNESDAY_OFF_SLOTS.split(','))) if not int(i)-1<0]
+            off_slots = [int(float(i))-1 for i in list(map(str.strip,tuple.WEDNESDAY_OFF_SLOTS.split(','))) if not int(float(i))-1<0]
             day = list(bin(int(pref_str[2], 16))[2:].rjust(no_slots_per_day,'0'))
             for slot in off_slots:
                 day[-int(slot)-1] = '1'
@@ -59,7 +59,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the less preferred slots for thursday
         try:
-            off_slots = [int(i)-1 for i in list(map(str.strip,tuple.THURSDAY_OFF_SLOTS.split(','))) if not int(i)-1<0]
+            off_slots = [int(float(i))-1 for i in list(map(str.strip,tuple.THURSDAY_OFF_SLOTS.split(','))) if not int(float(i))-1<0]
             day = list(bin(int(pref_str[3], 16))[2:].rjust(no_slots_per_day,'0'))
             for slot in off_slots:
                 day[-int(slot)-1] = '1'
@@ -70,7 +70,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the less preferred slots for friday
         try:
-            off_slots = [int(i)-1 for i in list(map(str.strip,tuple.FRIDAY_OFF_SLOTS.split(','))) if not int(i)-1<0]
+            off_slots = [int(float(i))-1 for i in list(map(str.strip,tuple.FRIDAY_OFF_SLOTS.split(','))) if not int(float(i))-1<0]
             day = list(bin(int(pref_str[4], 16))[2:].rjust(no_slots_per_day,'0'))
             for slot in off_slots:
                 day[-int(slot)-1] = '1'
@@ -81,7 +81,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the less preferred slots for saturday
         try:
-            off_slots = [int(i)-1 for i in list(map(str.strip,tuple.SATURDAY_OFF_SLOTS.split(','))) if not int(i)-1<0]
+            off_slots = [int(float(i))-1 for i in list(map(str.strip,tuple.SATURDAY_OFF_SLOTS.split(','))) if not int(float(i))-1<0]
             day = list(bin(int(pref_str[5], 16))[2:].rjust(no_slots_per_day,'0'))
             for slot in off_slots:
                 day[-int(slot)-1] = '1'
@@ -92,7 +92,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the less preferred slots for sunday
         try:
-            off_slots = [int(i)-1 for i in list(map(str.strip,tuple.SUNDAY_OFF_SLOTS.split(','))) if not int(i)-1<0]
+            off_slots = [int(float(i))-1 for i in list(map(str.strip,tuple.SUNDAY_OFF_SLOTS.split(','))) if not int(float(i))-1<0]
             day = list(bin(int(pref_str[6], 16))[2:].rjust(no_slots_per_day,'0'))
             for slot in off_slots:
                 day[-int(slot)-1] = '1'
@@ -103,7 +103,7 @@ def resourcePrefUpdate(no_slots_per_day, pref_file=None,data_file=None,key_field
 
         # Sets the general less preferred slots for all days
         try:
-            off_slots = [int(i) - 1 for i in list(map(str.strip,tuple.GENERAL_OFF_SLOTS.split(','))) if not int(i) - 1 < 0]
+            off_slots = [int(float(i)) - 1 for i in list(map(str.strip,tuple.GENERAL_OFF_SLOTS.split(','))) if not int(float(i)) - 1 < 0]
             for i in range(len(pref_str)):
                 day=list(bin(int(pref_str[i],16))[2:].rjust(no_slots_per_day,'0'))
                 for slot in off_slots:
