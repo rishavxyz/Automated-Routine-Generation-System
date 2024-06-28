@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure--93-gzw6v03s$+gw=%z5)6d6vkiw=rgjdm2ok0b0nzi*c(f6@w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app', '.ngrok-free.app', '.rishavmandal.xyz']
 
 
 # Application definition
@@ -34,6 +34,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Add your frontend URL here
     # Add more origins if needed
+    'https://fyp.rishavmandal.xyz',
+    'https://fyp-g27.vercel.app'
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',

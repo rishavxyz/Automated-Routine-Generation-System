@@ -94,7 +94,7 @@ const Form = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/generate_routine/",
+        "https://equipped-ostrich-fancy.ngrok-free.app/generate_routine/",
         formDataToSend,
         {
           headers: {

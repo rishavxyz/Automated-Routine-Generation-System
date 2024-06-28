@@ -14,7 +14,7 @@ function ResourceScheduler() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/csrf/", { withCredentials: true })
+      .get("https://equipped-ostrich-fancy.ngrok-free.app/csrf/", { withCredentials: true })
       .then((response) => {
         setCsrfToken(response.data.csrfToken);
       })
@@ -52,7 +52,7 @@ function ResourceScheduler() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8000/generate_resource/",
+        "https://equipped-ostrich-fancy.ngrok-free.app/generate_resource/",
         formData,
         {
           headers: {

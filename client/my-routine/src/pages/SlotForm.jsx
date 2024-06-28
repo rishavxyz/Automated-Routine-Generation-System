@@ -94,7 +94,7 @@ function SlotForm() {
     });
 
     try {
-      const res = await axios.post("http://localhost:8000/slots/", uploadData, {
+      const res = await axios.post("https://equipped-ostrich-fancy.ngrok-free.app/slots/", uploadData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
